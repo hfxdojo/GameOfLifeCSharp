@@ -7,16 +7,15 @@ namespace GameOfLife
     {
         private static void Main()
         {
-            const int rows = 30;
-            const int cols = 30;
+            const int rows = 25;
+            const int cols = 50;
 
             var grid = RandomCellsGrid(rows, cols, new Random());
             var generationsCount = 1;
 
             while (!Console.KeyAvailable)
             {
-                Console.WriteLine(grid.ToString());
-                Console.WriteLine($"Generation: {generationsCount++}. To stop press any button.");
+                Output(grid, generationsCount++);
 
                 grid = grid.NextGeneration();
 
@@ -41,6 +40,14 @@ namespace GameOfLife
         {
             const double threshold = 0.5;
             return random.NextDouble() > threshold;
+        }
+
+        private static void Output(Grid grid, int generationsCount)
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.Write(grid.ToString());
+
+            Console.WriteLine($"Generation: {generationsCount}. To stop press any button.");
         }
     }
 }
