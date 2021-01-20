@@ -45,9 +45,10 @@ namespace GameOfLife
         private static void Output(AbstractSpace<Cell> grid, int generationsCount)
         {
             Console.SetCursorPosition(0, 0);
-            Console.Write(grid.ToString());
-
             Console.WriteLine($"Generation: {generationsCount}. To stop press any button.");
+
+            Console.SetCursorPosition(0, 1);
+            Console.Write(grid.ToString());
         }
     }
 }

@@ -28,7 +28,7 @@ namespace GameOfLife
 
         public override string ToString()
         {
-            return Live ? "[]" : "--";
+            return Live ? "[]" : "  ";
         }
 
         private bool IsNextGenerationCellAlive(int neighbors)
