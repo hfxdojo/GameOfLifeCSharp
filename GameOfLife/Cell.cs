@@ -4,8 +4,15 @@ namespace GameOfLife
 {
     internal class Cell : AbstractLifeObject
     {
+        private AbstractSpace<Cell> Belongs;
+
         public Cell(bool live) : base(live)
         {
+        }
+
+        public override void BelongsTo(object space)
+        {
+            Belongs = space as AbstractSpace<Cell>;
         }
 
         public override AbstractLifeObject NextGeneration()

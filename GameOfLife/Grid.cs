@@ -4,9 +4,9 @@ using System.Text;
 
 namespace GameOfLife
 {
-    internal class Grid : AbstractSpace 
+    internal class Grid<T> : AbstractSpace<T> where T : AbstractLifeObject
     {
-        public Grid(AbstractLifeObject[,] objects) : base(objects)
+        public Grid(T[,] objects) : base(objects)
         {
         }
 
