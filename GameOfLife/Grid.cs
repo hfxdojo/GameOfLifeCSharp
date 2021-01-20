@@ -20,13 +20,6 @@ namespace GameOfLife
             _lifeObjects = objects;
         }
 
-        private void BelongsToThis(AbstractLifeObject[,] objects)
-        {
-            for (var row = 0; row < _rows; row++)
-                for (var col = 0; col < _cols; col++)
-                    objects[row, col].BelongsTo(this);
-        }
-
         public Grid NextGeneration()
         {
             var newLifeObjects = new AbstractLifeObject[_rows, _cols];
@@ -65,6 +58,13 @@ namespace GameOfLife
             }
 
             return strBuilder.ToString();
+        }
+
+        private void BelongsToThis(AbstractLifeObject[,] objects)
+        {
+            for (var row = 0; row < _rows; row++)
+                for (var col = 0; col < _cols; col++)
+                    objects[row, col].BelongsTo(this);
         }
 
         private (int row, int col) GetLocation(AbstractLifeObject lifeObject)

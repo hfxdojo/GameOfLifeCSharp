@@ -18,17 +18,17 @@ namespace GameOfLife
             return new Cell(IsNextGenerationCellAlive(neighbors));
         }
 
+        public override string ToString()
+        {
+            return _live ? "[]" : "--";
+        }
+
         private bool IsNextGenerationCellAlive(int neighbors)
         {
             if (_live)
                 return neighbors is not (< 2 or > 3);
 
             return neighbors == 3;
-        }
-
-        public override string ToString()
-        {
-            return _live ? "[]" : "--";
         }
     }
 }

@@ -11,14 +11,16 @@ namespace GameOfLife
             const int cols = 30;
 
             var grid = RandomCellsGrid(rows, cols, new Random());
+            var generationsCount = 1;
 
             while (!Console.KeyAvailable)
             {
                 Console.WriteLine(grid.ToString());
+                Console.WriteLine($"Generation: {generationsCount++}. To stop press any button.");
 
                 grid = grid.NextGeneration();
 
-                Task.Delay(1000).Wait();
+                Task.Delay(500).Wait();
             }
 
             Console.WriteLine("Done!");
