@@ -6,29 +6,8 @@ namespace GameOfLife
 {
     internal class Grid : AbstractSpace 
     {
-        private readonly int _cols;
-        private readonly AbstractLifeObject[,] _lifeObjects;
-        private readonly int _rows;
-
-        public Grid(AbstractLifeObject[,] objects)
+        public Grid(AbstractLifeObject[,] objects) : base(objects)
         {
-            _rows = objects.GetLength(0);
-            _cols = objects.GetLength(1);
-
-            BelongsToThis(objects);
-
-            _lifeObjects = objects;
-        }
-
-        public Grid NextGeneration()
-        {
-            var newLifeObjects = new AbstractLifeObject[_rows, _cols];
-
-            for (var row = 0; row < _rows; row++)
-            for (var col = 0; col < _cols; col++)
-                newLifeObjects[row, col] = _lifeObjects[row, col].NextGeneration();
-
-            return new Grid(newLifeObjects);
         }
 
         public override IEnumerable<AbstractLifeObject> GetNeighbors(AbstractLifeObject lifeObject)
@@ -58,13 +37,6 @@ namespace GameOfLife
             }
 
             return strBuilder.ToString();
-        }
-
-        private void BelongsToThis(AbstractLifeObject[,] objects)
-        {
-            for (var row = 0; row < _rows; row++)
-                for (var col = 0; col < _cols; col++)
-                    objects[row, col].BelongsTo(this);
         }
 
         private (int row, int col) GetLocation(AbstractLifeObject lifeObject)
