@@ -7,8 +7,8 @@ namespace GameOfLife
     {
         private static void Main()
         {
-            const int rows = 25;
-            const int cols = 50;
+            const int rows = 15;
+            const int cols = 25;
 
             var grid = RandomCellsGrid(rows, cols, new Random());
             var generationsCount = 1;
@@ -17,7 +17,7 @@ namespace GameOfLife
             {
                 Output(grid, generationsCount++);
 
-                grid = new Grid<Cell>(grid.NextGeneration());
+                grid = new ResizingGrid<Cell>(grid.NextGeneration());
 
                 Task.Delay(500).Wait();
             }
@@ -25,7 +25,7 @@ namespace GameOfLife
             Console.WriteLine("Done!");
         }
 
-        private static Grid<Cell> RandomCellsGrid(int rows, int cols, Random random)
+        private static AbstractSpace<Cell> RandomCellsGrid(int rows, int cols, Random random)
         {
             var cells = new Cell[rows, cols];
 
@@ -33,7 +33,7 @@ namespace GameOfLife
             for (var col = 0; col < cols; col++)
                 cells[row, col] = new Cell(RandomlyAlive(random));
 
-            return new Grid<Cell>(cells);
+            return new ResizingGrid<Cell>(cells);
         }
 
         private static bool RandomlyAlive(Random random)
@@ -42,7 +42,7 @@ namespace GameOfLife
             return random.NextDouble() > threshold;
         }
 
-        private static void Output(Grid<Cell> grid, int generationsCount)
+        private static void Output(AbstractSpace<Cell> grid, int generationsCount)
         {
             Console.SetCursorPosition(0, 0);
             Console.Write(grid.ToString());

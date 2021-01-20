@@ -10,6 +10,10 @@ namespace GameOfLife
         {
         }
 
+        public Cell() : base(false)
+        {
+        }
+
         public override void BelongsTo(object space)
         {
             Belongs = space as AbstractSpace<Cell>;
