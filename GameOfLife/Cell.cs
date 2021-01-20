@@ -4,28 +4,25 @@ namespace GameOfLife
 {
     internal class Cell : AbstractLifeObject
     {
-        private readonly bool _live;
-
-        public Cell(bool live)
+        public Cell(bool live) : base(live)
         {
-            _live = live;
         }
 
         public override AbstractLifeObject NextGeneration()
         {
-            var neighbors = Belongs.GetNeighbors(this).OfType<Cell>().Count(c => c._live);
+            var neighbors = Belongs.GetNeighbors(this).OfType<Cell>().Count(c => c.Live);
 
             return new Cell(IsNextGenerationCellAlive(neighbors));
         }
 
         public override string ToString()
         {
-            return _live ? "[]" : "--";
+            return Live ? "[]" : "--";
         }
 
         private bool IsNextGenerationCellAlive(int neighbors)
         {
-            if (_live)
+            if (Live)
                 return neighbors is not (< 2 or > 3);
 
             return neighbors == 3;
