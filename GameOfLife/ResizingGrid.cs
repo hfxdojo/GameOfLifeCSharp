@@ -18,18 +18,25 @@
             var rows = lifeObjects.GetLength(0);
             var cols = lifeObjects.GetLength(1);
 
-            var top = GetSizeAdjustmentTop(lifeObjects, rows, cols);
-            var bottom = GetSizeAdjustmentBottom(lifeObjects, rows, cols);
-            var left = GetSizeAdjustmentLeft(lifeObjects, rows, cols);
-            var right = GetSizeAdjustmentRight(lifeObjects, rows, cols);
-            
+            var (top, bottom, left, right) = GetSizeAdjustments(lifeObjects, rows, cols);
+
             var resized = new T[rows + top + bottom, cols + left + right];
 
             for (var row = 1 - top; row < rows + bottom - 1; row++)
                 for (var col = 1 - left; col < cols + right - 1; col++)
                     resized[row + top, col + left] = lifeObjects[row, col];
-            
+
             return resized;
+        }
+
+        private static (int top, int bottom, int left, int right) GetSizeAdjustments(T[,] lifeObjects, int rows, int cols)
+        {
+            var top = GetSizeAdjustmentTop(lifeObjects, rows, cols);
+            var bottom = GetSizeAdjustmentBottom(lifeObjects, rows, cols);
+            var left = GetSizeAdjustmentLeft(lifeObjects, rows, cols);
+            var right = GetSizeAdjustmentRight(lifeObjects, rows, cols);
+
+            return (top, bottom, left, right);
         }
 
         private static T[,] PopulateEmptyPositions(T[,] lifeObjects)
