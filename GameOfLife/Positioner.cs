@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -6,47 +7,57 @@ namespace GameOfLife
 {
     internal static class Positioner
     {
-        public static string InCenter(string gridString)
+        public static string InCenter(string gridString, int windowWidth, int windowHeight)
         {
-            var gridLines = gridString.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+            var elements = new Elements(gridString, windowWidth, windowHeight);
 
-            var gridWidth = gridLines[0].Length;
-            var gridHeight = gridLines.Length;
+            var strBuilder = new StringBuilder(windowWidth * windowHeight)
+                .Append(elements.VerticalMargin)
+                .Append(elements.HorizontalBoundaryLine);
 
-            int horozontalMarginWidth = GetMarginSize(Console.WindowWidth, gridWidth);
-            int verticalMarginHeight = GetMarginSize(Console.WindowHeight, gridHeight);
-
-            string emptyLine = new string(' ', Console.WindowWidth) + Environment.NewLine;
-
-            var horizontalMargin = new string(' ', horozontalMarginWidth);
-
-            var horizontalBoundaryLine = horizontalMargin + '+' + new string('-', gridWidth) + '+' + horizontalMargin + Environment.NewLine;
-
-            var strBuilder = new StringBuilder();
-
-            // top margin
-            strBuilder.Append(string.Concat(Enumerable.Repeat(emptyLine, verticalMarginHeight)));
-
-            strBuilder.Append(horizontalBoundaryLine);
-
-            foreach (var gridLine in gridLines)
+            foreach (var gridLine in elements.GridLines)
             {
                 // left margin + vertical boundary + gridLine + vertical boundary + right margin
-                strBuilder.Append(horizontalMargin + '|' + gridLine + '|' + horizontalMargin + Environment.NewLine);
+                strBuilder.AppendLine(elements.HorizontalMargin + '|' + gridLine + '|' + elements.HorizontalMargin);
             }
 
-            strBuilder.Append(horizontalBoundaryLine);
-
-            // bottom margin
-            strBuilder.Append(string.Concat(Enumerable.Repeat(emptyLine, verticalMarginHeight)));
+            strBuilder.Append(elements.HorizontalBoundaryLine)
+                .Append(elements.VerticalMargin);
 
             return strBuilder.ToString();
         }
 
-        private static int GetMarginSize(int windowSize, int gridWidth)
+        private class Elements
         {
-            int marginSize = (windowSize - gridWidth) / 2 - 1;
-            return marginSize < 0 ? 0 : marginSize;
+            public string[] GridLines;
+            public string VerticalMargin;
+            public string HorizontalMargin;
+            public string HorizontalBoundaryLine;
+
+            public Elements(string gridString, int windowWidth, int windowHeight)
+            {
+                GridLines = gridString.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+
+                var gridWidth = GridLines[0].Length;
+                var gridHeight = GridLines.Length;
+
+                int horozontalMarginWidth = GetMarginSize(windowWidth, gridWidth);
+                int verticalMarginHeight = GetMarginSize(windowHeight, gridHeight);
+
+                string emptyLine = new string(' ', windowWidth) + Environment.NewLine;
+
+                VerticalMargin = string.Concat(Enumerable.Repeat(emptyLine, verticalMarginHeight));
+
+                HorizontalMargin = new string(' ', horozontalMarginWidth);
+
+                HorizontalBoundaryLine = HorizontalMargin + '+' + new string('-', gridWidth) + '+' + HorizontalMargin + Environment.NewLine;
+            }
+
+            private static int GetMarginSize(int windowSize, int gridWidth)
+            {
+                int marginSize = (windowSize - gridWidth) / 2 - 1;
+                return marginSize < 0 ? 0 : marginSize;
+            }
         }
     }
 }
