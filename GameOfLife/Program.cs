@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,43 +33,45 @@ namespace GameOfLife
             Console.Write(ToCenterOfWindow(grid.ToString()));
 
             Console.SetCursorPosition(0, 0);
-            Console.Write(grid.Report());
+            Console.Write(grid.Report() + $" To stop press any button.");
         }
 
         private static string ToCenterOfWindow(string gridString)
         {
-            var gridLines = gridString.Split(Environment.NewLine);
+            var gridLines = gridString.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
 
             var gridWidth = gridLines[0].Length;
             var gridHeight = gridLines.Length;
 
-            int horozontalMargin = (Console.WindowWidth - gridWidth) / 2;
-            horozontalMargin = horozontalMargin < 0 ? 0 : horozontalMargin;
+            int horozontalMarginWidth = (Console.WindowWidth - gridWidth) / 2 - 1;
+            horozontalMarginWidth = horozontalMarginWidth < 0 ? 0 : horozontalMarginWidth;
 
-            int verticalMargin = (Console.WindowHeight - gridHeight) / 2;
-            verticalMargin = verticalMargin < 0 ? 0 : verticalMargin;
+            int verticalMarginHeight = (Console.WindowHeight - gridHeight) / 2 - 1;
+            verticalMarginHeight = verticalMarginHeight < 0 ? 0 : verticalMarginHeight;
+
+            string emptyLine = new string(' ', Console.WindowWidth) + Environment.NewLine;
+
+            var horizontalMargin = new string(' ', horozontalMarginWidth);
+
+            var horizontalBoundaryLine = horizontalMargin + '+' + new string('-', gridWidth) + '+' + horizontalMargin + Environment.NewLine;
 
             var strBuilder = new StringBuilder();
 
             // top margin
-            strBuilder.Insert(0, new string(' ', Console.WindowWidth - 10) + Environment.NewLine, verticalMargin);
+            strBuilder.Append(string.Concat(Enumerable.Repeat(emptyLine, verticalMarginHeight)));
+
+            strBuilder.Append(horizontalBoundaryLine);
 
             foreach (var gridLine in gridLines)
             {
-                // left margin
-                strBuilder.Append(new string(' ', horozontalMargin - 1));
-
-                strBuilder.Append('|');
-                strBuilder.Append(gridLine);
-                strBuilder.Append('|');
-
-                // right margin
-                strBuilder.Append(new string(' ', horozontalMargin - 1));
-                strBuilder.Append(Environment.NewLine);
+                // left margin + vertical boundary + gridLine + vertical boundary + right margin
+                strBuilder.Append(horizontalMargin + '|' + gridLine + '|' + horizontalMargin + Environment.NewLine);
             }
 
+            strBuilder.Append(horizontalBoundaryLine);
+
             // bottom margin
-            strBuilder.Insert(strBuilder.Length, new string(' ', Console.WindowWidth) + Environment.NewLine, verticalMargin);
+            strBuilder.Append(string.Concat(Enumerable.Repeat(emptyLine, verticalMarginHeight)));
 
             return strBuilder.ToString();
         }
