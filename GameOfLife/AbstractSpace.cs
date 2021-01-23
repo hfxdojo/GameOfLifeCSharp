@@ -4,32 +4,41 @@ namespace GameOfLife
 {
     internal abstract class AbstractSpace<T> where T : AbstractLifeObject
     {
-        private protected readonly int _cols;
-        private protected readonly int _rows;
-        private protected readonly T[,] _lifeObjects;
-        private protected uint generationsCount = 1;
+        private protected int _cols;
+        private protected int _rows;
+        private protected uint _generationsCount = 1;
+
+        private T[,] _lifeObjects;
+
+        public T[,] LifeObjects
+        {
+            get { return _lifeObjects; }
+            set 
+            { 
+                _lifeObjects = value;
+                _rows = _lifeObjects.GetLength(0);
+                _cols = _lifeObjects.GetLength(1);
+                _generationsCount++;
+
+                BelongsToThis(_lifeObjects);
+            }
+        }
+
 
         public AbstractSpace(T[,] objects)
         {
-            _rows = objects.GetLength(0);
-            _cols = objects.GetLength(1);
-
-            BelongsToThis(objects);
-
-            _lifeObjects = objects;
+            LifeObjects = objects;
         }
 
         public abstract IEnumerable<AbstractLifeObject> GetNeighbors(AbstractLifeObject obj);
 
         public virtual T[,] NextGeneration()
         {
-            generationsCount++;
-
             var newLifeObjects = new T[_rows, _cols];
 
             for (var row = 0; row < _rows; row++)
             for (var col = 0; col < _cols; col++)
-                newLifeObjects[row, col] = _lifeObjects[row, col].NextGeneration() as T;
+                newLifeObjects[row, col] = LifeObjects[row, col].NextGeneration() as T;
 
             return newLifeObjects;
         }
@@ -43,7 +52,7 @@ namespace GameOfLife
 
         internal string Report()
         {
-            return $"Generation: {generationsCount}. To stop press any button.";
+            return $"Generation: {_generationsCount}. To stop press any button.";
         }
     }
 }

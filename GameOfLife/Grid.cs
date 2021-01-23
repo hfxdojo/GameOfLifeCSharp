@@ -21,7 +21,7 @@ namespace GameOfLife
                 if (row < 0 || col < 0) continue;
                 if (row >= _rows || col >= _cols) continue;
 
-                yield return _lifeObjects[row, col];
+                yield return LifeObjects[row, col];
             }
         }
 
@@ -31,7 +31,7 @@ namespace GameOfLife
 
             for (var row = 0; row < _rows; row++)
             {
-                for (var col = 0; col < _cols; col++) strBuilder.Append(_lifeObjects[row, col]);
+                for (var col = 0; col < _cols; col++) strBuilder.Append(LifeObjects[row, col]);
 
                 strBuilder.Append(Environment.NewLine);
             }
@@ -43,7 +43,7 @@ namespace GameOfLife
         {
             for (var row = 0; row < _rows; row++)
             for (var col = 0; col < _cols; col++)
-                if (_lifeObjects[row, col].Equals(lifeObject))
+                if (LifeObjects[row, col].Equals(lifeObject))
                     return (row, col);
 
             throw new ArgumentException("Grid does not contain this life object");
