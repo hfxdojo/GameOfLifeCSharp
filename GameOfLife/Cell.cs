@@ -20,7 +20,7 @@ namespace GameOfLife
             Belongs = space as AbstractSpace<Cell>;
         }
 
-        internal static Cell[,] Populate(int rows, int cols, bool? live = null)
+        internal static Cell[,] PopulateRandomly(int rows, int cols)
         {
             var random = new Random();
 
@@ -28,7 +28,7 @@ namespace GameOfLife
 
             for (var row = 0; row < rows; row++)
                 for (var col = 0; col < cols; col++)
-                    cells[row, col] = new Cell(live ?? RandomlyAlive(random));
+                    cells[row, col] = new Cell(RandomlyAlive(random));
 
             return cells;
         }

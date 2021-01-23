@@ -11,7 +11,7 @@ namespace GameOfLife
             const int cols = 25;
 
             //var grid = new Grid<Cell>(Cell.Populate(rows, cols));
-            var grid = new ResizingGrid<Cell>(Cell.Populate(rows, cols));
+            var grid = new ResizingGrid<Cell>(Cell.PopulateRandomly(rows, cols));
 
             while (!Console.KeyAvailable)
             {
