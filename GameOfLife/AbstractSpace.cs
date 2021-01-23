@@ -7,6 +7,7 @@ namespace GameOfLife
         private protected readonly int _cols;
         private protected readonly int _rows;
         private protected readonly T[,] _lifeObjects;
+        private protected uint generationsCount = 1;
 
         public AbstractSpace(T[,] objects)
         {
@@ -22,6 +23,8 @@ namespace GameOfLife
 
         public virtual T[,] NextGeneration()
         {
+            generationsCount++;
+
             var newLifeObjects = new T[_rows, _cols];
 
             for (var row = 0; row < _rows; row++)
@@ -36,6 +39,11 @@ namespace GameOfLife
             for (var row = 0; row < _rows; row++)
                 for (var col = 0; col < _cols; col++)
                     objects[row, col].BelongsTo(this);
+        }
+
+        internal string Report()
+        {
+            return $"Generation: {generationsCount}. To stop press any button.";
         }
     }
 }

@@ -12,11 +12,10 @@ namespace GameOfLife
             const int cols = 25;
 
             var grid = RandomCellsGrid(rows, cols, new Random());
-            var generationsCount = 1;
 
             while (!Console.KeyAvailable)
             {
-                Output(grid, generationsCount++);
+                Output(grid);
 
                 grid = new ResizingGrid<Cell>(grid.NextGeneration());
 
@@ -43,13 +42,13 @@ namespace GameOfLife
             return random.NextDouble() > threshold;
         }
 
-        private static void Output(AbstractSpace<Cell> grid, int generationsCount)
+        private static void Output(AbstractSpace<Cell> grid)
         {
             Console.SetCursorPosition(0, 0);
             Console.Write(FullScreen(grid.ToString()));
 
             Console.SetCursorPosition(0, 0);
-            Console.Write($"Generation: {generationsCount}. To stop press any button.");
+            Console.Write(grid.Report());
         }
 
         private static string FullScreen(string gridString)
