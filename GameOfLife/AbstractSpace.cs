@@ -6,7 +6,7 @@ namespace GameOfLife
     {
         private protected int _cols;
         private protected int _rows;
-        private protected uint _generationsCount = 1;
+        private protected uint _generationsCount = 0;
 
         private T[,] _lifeObjects;
 
