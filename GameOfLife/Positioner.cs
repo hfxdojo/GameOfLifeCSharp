@@ -10,18 +10,16 @@ namespace GameOfLife
         {
             var elements = new Elements(gridString, windowWidth, windowHeight);
 
-            var strBuilder = new StringBuilder(windowWidth * windowHeight)
-                .Append(elements.VerticalMargin)
-                .Append(elements.HorizontalBoundaryLine);
+            var strBuilder = new StringBuilder(windowWidth * windowHeight);
+
+            strBuilder.Append(elements.VerticalMargin);
 
             foreach (var gridLine in elements.GridLines)
             {
-                // left margin + vertical boundary + gridLine + vertical boundary + right margin
-                strBuilder.AppendLine(elements.HorizontalMargin + '|' + gridLine + '|' + elements.HorizontalMargin);
+                strBuilder.AppendLine(elements.HorizontalMargin + gridLine + elements.HorizontalMargin);
             }
 
-            strBuilder.Append(elements.HorizontalBoundaryLine)
-                .Append(elements.VerticalMargin);
+            strBuilder.Append(elements.VerticalMargin);
 
             return strBuilder.ToString();
         }
@@ -31,7 +29,6 @@ namespace GameOfLife
             public string[] GridLines;
             public string VerticalMargin;
             public string HorizontalMargin;
-            public string HorizontalBoundaryLine;
 
             public Elements(string gridString, int windowWidth, int windowHeight)
             {
@@ -48,8 +45,6 @@ namespace GameOfLife
                 VerticalMargin = string.Concat(Enumerable.Repeat(emptyLine, verticalMarginHeight));
 
                 HorizontalMargin = new string(' ', horizontalMarginWidth);
-
-                HorizontalBoundaryLine = HorizontalMargin + '+' + new string('-', gridWidth) + '+' + HorizontalMargin + Environment.NewLine;
             }
 
             private static int GetMarginSize(int windowSize, int gridWidth)

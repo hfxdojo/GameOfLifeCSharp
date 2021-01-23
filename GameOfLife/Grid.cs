@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GameOfLife
 {
-    internal class Grid<T> : AbstractSpace<T> where T : AbstractLifeObject
+    internal class Grid<T> : AbstractSpace<T> where T : AbstractLifeObject, new()
     {
         public Grid(T[,] objects) : base(objects)
         {
@@ -27,14 +27,20 @@ namespace GameOfLife
 
         public override string ToString()
         {
-            var strBuilder = new StringBuilder();
+            int objectLength = new T().ToString().Length;
+            var horizontalBorder = '+' + new string('-', Cols * objectLength) + '+';
+            const string verticalBorder = "|";
+
+            var strBuilder = new StringBuilder().AppendLine(horizontalBorder);
 
             for (var row = 0; row < Rows; row++)
             {
+                strBuilder.Append(verticalBorder);
                 for (var col = 0; col < Cols; col++) strBuilder.Append(LifeObjects[row, col]);
-
-                strBuilder.Append(Environment.NewLine);
+                strBuilder.AppendLine(verticalBorder);
             }
+
+            strBuilder.AppendLine(horizontalBorder);
 
             return strBuilder.ToString();
         }
