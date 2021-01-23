@@ -43,11 +43,8 @@ namespace GameOfLife
             var gridWidth = gridLines[0].Length;
             var gridHeight = gridLines.Length;
 
-            int horozontalMarginWidth = (Console.WindowWidth - gridWidth) / 2 - 1;
-            horozontalMarginWidth = horozontalMarginWidth < 0 ? 0 : horozontalMarginWidth;
-
-            int verticalMarginHeight = (Console.WindowHeight - gridHeight) / 2 - 1;
-            verticalMarginHeight = verticalMarginHeight < 0 ? 0 : verticalMarginHeight;
+            int horozontalMarginWidth = GetMarginSize(Console.WindowWidth, gridWidth);
+            int verticalMarginHeight = GetMarginSize(Console.WindowHeight, gridHeight);
 
             string emptyLine = new string(' ', Console.WindowWidth) + Environment.NewLine;
 
@@ -74,6 +71,12 @@ namespace GameOfLife
             strBuilder.Append(string.Concat(Enumerable.Repeat(emptyLine, verticalMarginHeight)));
 
             return strBuilder.ToString();
+        }
+
+        private static int GetMarginSize(int windowSize, int gridWidth)
+        {
+            int marginSize = (windowSize - gridWidth) / 2 - 1;
+            return marginSize < 0 ? 0 : marginSize;
         }
     }
 }
