@@ -19,7 +19,7 @@ namespace GameOfLife
             {
                 if (row == objectRow && col == objectCol) continue;
                 if (row < 0 || col < 0) continue;
-                if (row >= _rows || col >= _cols) continue;
+                if (row >= Rows || col >= Cols) continue;
 
                 yield return LifeObjects[row, col];
             }
@@ -29,9 +29,9 @@ namespace GameOfLife
         {
             var strBuilder = new StringBuilder();
 
-            for (var row = 0; row < _rows; row++)
+            for (var row = 0; row < Rows; row++)
             {
-                for (var col = 0; col < _cols; col++) strBuilder.Append(LifeObjects[row, col]);
+                for (var col = 0; col < Cols; col++) strBuilder.Append(LifeObjects[row, col]);
 
                 strBuilder.Append(Environment.NewLine);
             }
@@ -41,8 +41,8 @@ namespace GameOfLife
 
         private (int row, int col) GetLocation(AbstractLifeObject lifeObject)
         {
-            for (var row = 0; row < _rows; row++)
-            for (var col = 0; col < _cols; col++)
+            for (var row = 0; row < Rows; row++)
+            for (var col = 0; col < Cols; col++)
                 if (LifeObjects[row, col].Equals(lifeObject))
                     return (row, col);
 
