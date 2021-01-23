@@ -28,13 +28,13 @@ namespace GameOfLife
         private static void Output(AbstractSpace<Cell> grid)
         {
             Console.SetCursorPosition(0, 0);
-            Console.Write(FullScreen(grid.ToString()));
+            Console.Write(ToCenterOfWindow(grid.ToString()));
 
             Console.SetCursorPosition(0, 0);
             Console.Write(grid.Report());
         }
 
-        private static string FullScreen(string gridString)
+        private static string ToCenterOfWindow(string gridString)
         {
             var gridLines = gridString.Split(Environment.NewLine);
 
