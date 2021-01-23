@@ -50,7 +50,7 @@ namespace GameOfLife
 
         public virtual string Report()
         {
-            return $"Generation: {_generationsCount}. To stop press any button.";
+            return $"Generation: {_generationsCount}.";
         }
     }
 }
