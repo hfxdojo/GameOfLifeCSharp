@@ -11,7 +11,7 @@ namespace GameOfLife
             const int rows = 15;
             const int cols = 25;
 
-            var grid = RandomCellsGrid(rows, cols, new Random());
+            var grid = new ResizingGrid<Cell>(Cell.Populate(rows, cols));
 
             while (!Console.KeyAvailable)
             {
@@ -23,23 +23,6 @@ namespace GameOfLife
             }
 
             Console.WriteLine("Done!");
-        }
-
-        private static AbstractSpace<Cell> RandomCellsGrid(int rows, int cols, Random random)
-        {
-            var cells = new Cell[rows, cols];
-
-            for (var row = 0; row < rows; row++)
-            for (var col = 0; col < cols; col++)
-                cells[row, col] = new Cell(RandomlyAlive(random));
-
-            return new ResizingGrid<Cell>(cells);
-        }
-
-        private static bool RandomlyAlive(Random random)
-        {
-            const double threshold = 0.5;
-            return random.NextDouble() > threshold;
         }
 
         private static void Output(AbstractSpace<Cell> grid)

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace GameOfLife
 {
@@ -17,6 +18,19 @@ namespace GameOfLife
         public override void BelongsTo(object space)
         {
             Belongs = space as AbstractSpace<Cell>;
+        }
+
+        internal static Cell[,] Populate(int rows, int cols, bool? live = null)
+        {
+            var random = new Random();
+
+            var cells = new Cell[rows, cols];
+
+            for (var row = 0; row < rows; row++)
+                for (var col = 0; col < cols; col++)
+                    cells[row, col] = new Cell(live ?? RandomlyAlive(random));
+
+            return cells;
         }
 
         public override AbstractLifeObject NextGeneration()
