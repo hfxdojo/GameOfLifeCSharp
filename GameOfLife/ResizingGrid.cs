@@ -53,7 +53,7 @@
             for (var row = 0; row < rows; row++)
                 for (var col = 0; col < cols; col++)
                     if (lifeObjects[row, col].Live)
-                        return row is (1 or 2) ? 0 : -row + 1;
+                        return IsWithinTolerance(row) ? 0 : -row + 1;
 
             return 0;
         }
@@ -63,7 +63,7 @@
             for (var row = rows - 1; row >= 0; row--)
                 for (var col = 0; col < cols; col++)
                     if (lifeObjects[row, col].Live)
-                        return (rows - row) is (1 or 2) ? 0 : -rows + row + 2;
+                        return IsWithinTolerance(rows - row) ? 0 : -rows + row + 2;
             return 0;
         }
 
@@ -72,7 +72,7 @@
             for (var col = 0; col < cols; col++)
                 for (var row = 0; row < rows; row++)
                     if (lifeObjects[row, col].Live)
-                        return col is (1 or 2) ? 0 : -col + 1;
+                        return IsWithinTolerance(col) ? 0 : -col + 1;
 
             return 0;
         }
@@ -82,9 +82,11 @@
             for (var col = cols - 1; col >= 0; col--)
                 for (var row = 0; row < rows; row++)
                     if (lifeObjects[row, col].Live)
-                        return (cols - col) is (1 or 2) ? 0 : -cols + col + 2;
+                        return IsWithinTolerance(cols - col) ? 0 : -cols + col + 2;
 
             return 0;
         }
+
+        private static bool IsWithinTolerance(int value) => value is >= 1 and <= 5;
     }
 }
