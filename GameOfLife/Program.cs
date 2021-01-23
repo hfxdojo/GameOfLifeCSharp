@@ -11,6 +11,7 @@ namespace GameOfLife
             const int rows = 15;
             const int cols = 25;
 
+            //var grid = new Grid<Cell>(Cell.Populate(rows, cols));
             var grid = new ResizingGrid<Cell>(Cell.Populate(rows, cols));
 
             while (!Console.KeyAvailable)
@@ -48,18 +49,24 @@ namespace GameOfLife
             verticalMargin = verticalMargin < 0 ? 0 : verticalMargin;
 
             var strBuilder = new StringBuilder();
+
             // top margin
             strBuilder.Insert(0, new string(' ', Console.WindowWidth - 10) + Environment.NewLine, verticalMargin);
 
             foreach (var gridLine in gridLines)
             {
                 // left margin
-                strBuilder.Append(new string(' ', horozontalMargin));
+                strBuilder.Append(new string(' ', horozontalMargin - 1));
+
+                strBuilder.Append('|');
                 strBuilder.Append(gridLine);
+                strBuilder.Append('|');
+
                 // right margin
-                strBuilder.Append(new string(' ', horozontalMargin));
+                strBuilder.Append(new string(' ', horozontalMargin - 1));
                 strBuilder.Append(Environment.NewLine);
             }
+
             // bottom margin
             strBuilder.Insert(strBuilder.Length, new string(' ', Console.WindowWidth) + Environment.NewLine, verticalMargin);
 
