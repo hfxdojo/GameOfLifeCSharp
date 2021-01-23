@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 
 namespace GameOfLife
 {
-    internal abstract class AbstractSpace<T> where T : AbstractLifeObject
+    internal abstract class AbstractSpace<T> where T : AbstractLifeObject, new()
     {
         private protected int Rows => _lifeObjects.GetLength(0);
         private protected int Cols => _lifeObjects.GetLength(1);
@@ -41,16 +42,40 @@ namespace GameOfLife
             return newLifeObjects;
         }
 
+        public virtual string Report()
+        {
+            return $"Generation: {_generationsCount}.";
+        }
+
+        public virtual string ToString(bool border)
+        {
+            int objectLength = new T().ToString().Length;
+            var horizontalBorder = '+' + new string('-', Cols * objectLength) + '+';
+            const char verticalBorder = '|';
+
+            var strBuilder = new StringBuilder();
+
+            if (border) strBuilder.AppendLine(horizontalBorder);
+
+            for (var row = 0; row < Rows; row++)
+            {
+                if (border) strBuilder.Append(verticalBorder);
+                for (var col = 0; col < Cols; col++) strBuilder.Append(LifeObjects[row, col]);
+                if (border) strBuilder.Append(verticalBorder);
+
+                strBuilder.AppendLine();
+            }
+
+            if (border) strBuilder.AppendLine(horizontalBorder);
+
+            return strBuilder.ToString();
+        }
+
         private void BelongsToThis(T[,] objects)
         {
             for (var row = 0; row < Rows; row++)
                 for (var col = 0; col < Cols; col++)
                     objects[row, col].BelongsTo(this);
-        }
-
-        public virtual string Report()
-        {
-            return $"Generation: {_generationsCount}.";
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace GameOfLife
 {
@@ -23,26 +22,6 @@ namespace GameOfLife
 
                 yield return LifeObjects[row, col];
             }
-        }
-
-        public override string ToString()
-        {
-            int objectLength = new T().ToString().Length;
-            var horizontalBorder = '+' + new string('-', Cols * objectLength) + '+';
-            const string verticalBorder = "|";
-
-            var strBuilder = new StringBuilder().AppendLine(horizontalBorder);
-
-            for (var row = 0; row < Rows; row++)
-            {
-                strBuilder.Append(verticalBorder);
-                for (var col = 0; col < Cols; col++) strBuilder.Append(LifeObjects[row, col]);
-                strBuilder.AppendLine(verticalBorder);
-            }
-
-            strBuilder.AppendLine(horizontalBorder);
-
-            return strBuilder.ToString();
         }
 
         private (int row, int col) GetLocation(AbstractLifeObject lifeObject)

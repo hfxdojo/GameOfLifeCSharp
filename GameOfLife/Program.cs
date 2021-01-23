@@ -28,7 +28,7 @@ namespace GameOfLife
         private static void Output(AbstractSpace<Cell> grid)
         {
             Console.SetCursorPosition(0, 0);
-            Console.Write(Positioner.InCenter(grid.ToString(), Console.WindowWidth, Console.WindowHeight));
+            Console.Write(Positioner.InCenter(grid.ToString(border: true), Console.WindowWidth, Console.WindowHeight));
 
             Console.SetCursorPosition(0, 0);
             Console.Write(grid.Report() + $" To stop press any button.");

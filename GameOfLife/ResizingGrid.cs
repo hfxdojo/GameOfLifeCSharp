@@ -18,7 +18,7 @@
 
         public override string Report()
         {
-            return base.Report() + $" Top left corner coords ({_shiftRows}, {_shiftCols})";
+            return base.Report() + $" Top left corner coords ({_shiftRows}, {_shiftCols}).";
         }
 
         private T[,] Resize(T[,] lifeObjects)
