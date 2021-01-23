@@ -2,6 +2,9 @@
 {
     internal class ResizingGrid<T> : Grid<T> where T : AbstractLifeObject, new()
     {
+        private int _shiftRows;
+        private int _shiftCols;
+
         public ResizingGrid(T[,] objects) : base(objects)
         {
         }
@@ -13,11 +16,17 @@
             return PopulateEmptyPositions(Resize(nextGeneration));
         }
 
-        private static T[,] Resize(T[,] lifeObjects)
+        public override string Report()
+        {
+            return base.Report() + $"Top left corner coords ({_shiftRows}, {_shiftCols})";
+        }
+
+        private T[,] Resize(T[,] lifeObjects)
         {
             var rows = lifeObjects.GetLength(0);
             var cols = lifeObjects.GetLength(1);
 
+            // positive means extend
             var (top, bottom, left, right) = GetSizeAdjustments(lifeObjects, rows, cols);
 
             var resized = new T[rows + top + bottom, cols + left + right];
@@ -25,6 +34,9 @@
             for (var row = 1 - top; row < rows + bottom - 1; row++)
                 for (var col = 1 - left; col < cols + right - 1; col++)
                     resized[row + top, col + left] = lifeObjects[row, col];
+
+            _shiftRows -= top;
+            _shiftCols -= left;
 
             return resized;
         }

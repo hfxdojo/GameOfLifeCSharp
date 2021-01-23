@@ -17,7 +17,7 @@ namespace GameOfLife
             {
                 Output(grid);
 
-                grid = new ResizingGrid<Cell>(grid.NextGeneration());
+                grid.LifeObjects = grid.NextGeneration();
 
                 Task.Delay(500).Wait();
             }

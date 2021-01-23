@@ -48,7 +48,7 @@ namespace GameOfLife
                     objects[row, col].BelongsTo(this);
         }
 
-        internal string Report()
+        public virtual string Report()
         {
             return $"Generation: {_generationsCount}. To stop press any button.";
         }
