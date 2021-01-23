@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -41,14 +40,14 @@ namespace GameOfLife
                 var gridWidth = GridLines[0].Length;
                 var gridHeight = GridLines.Length;
 
-                int horozontalMarginWidth = GetMarginSize(windowWidth, gridWidth);
+                int horizontalMarginWidth = GetMarginSize(windowWidth, gridWidth);
                 int verticalMarginHeight = GetMarginSize(windowHeight, gridHeight);
 
                 string emptyLine = new string(' ', windowWidth) + Environment.NewLine;
 
                 VerticalMargin = string.Concat(Enumerable.Repeat(emptyLine, verticalMarginHeight));
 
-                HorizontalMargin = new string(' ', horozontalMarginWidth);
+                HorizontalMargin = new string(' ', horizontalMarginWidth);
 
                 HorizontalBoundaryLine = HorizontalMargin + '+' + new string('-', gridWidth) + '+' + HorizontalMargin + Environment.NewLine;
             }
