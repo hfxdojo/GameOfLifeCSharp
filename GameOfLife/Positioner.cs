@@ -24,11 +24,6 @@ namespace GameOfLife
                            totalSize: windowWidth * windowHeight);
         }
 
-        private static string CreateHorizontalMargin(int width)
-        {
-            return new string(' ', width);
-        }
-
         private static (string[] lines, int width, int height) Decompose(string gridString)
         {
             var gridLines = gridString.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
@@ -45,10 +40,15 @@ namespace GameOfLife
             return marginSize < 0 ? 0 : marginSize;
         }
 
-        private static string CreateVerticalMargin(int height, int width)
+        private static string CreateVerticalMargin(int width, int height)
         {
             string emptyLine = new string(' ', width) + Environment.NewLine;
             return string.Concat(Enumerable.Repeat(emptyLine, height));
+        }
+
+        private static string CreateHorizontalMargin(int width)
+        {
+            return new string(' ', width);
         }
 
         private static string Compose(string[] gridLines,
