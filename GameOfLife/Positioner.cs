@@ -8,50 +8,56 @@ namespace GameOfLife
     {
         public static string InCenter(string gridString, int windowWidth, int windowHeight)
         {
-            var elements = new Elements(gridString, windowWidth, windowHeight);
+            var gridLines = gridString.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
 
-            var strBuilder = new StringBuilder(windowWidth * windowHeight);
+            var gridWidth = gridLines[0].Length;
+            var gridHeight = gridLines.Length;
 
-            strBuilder.Append(elements.VerticalMargin);
+            int horizontalMarginWidth = GetMarginSize(windowWidth, gridWidth);
+            int verticalMarginHeight = GetMarginSize(windowHeight, gridHeight);
 
-            foreach (var gridLine in elements.GridLines)
-            {
-                strBuilder.AppendLine(elements.HorizontalMargin + gridLine + elements.HorizontalMargin);
-            }
+            string emptyLine = new string(' ', windowWidth) + Environment.NewLine;
 
-            strBuilder.Append(elements.VerticalMargin);
+            var verticalMargin = string.Concat(Enumerable.Repeat(emptyLine, verticalMarginHeight));
 
-            return strBuilder.ToString();
+            var horizontalMargin = new string(' ', horizontalMarginWidth);
+
+            var totalSize = windowWidth * windowHeight;
+
+            return Compose(gridLines, verticalMargin, horizontalMargin, horizontalMargin, verticalMargin, totalSize);
         }
 
-        private class Elements
+        private static int GetMarginSize(int windowSize, int gridWidth)
         {
-            public string[] GridLines;
-            public string VerticalMargin;
-            public string HorizontalMargin;
+            int marginSize = (windowSize - gridWidth) / 2 - 1;
+            return marginSize < 0 ? 0 : marginSize;
+        }
 
-            public Elements(string gridString, int windowWidth, int windowHeight)
+        private static string Compose(string[] gridLines, string topMargin, string leftMargin, string rightMargin, string bottomMargin, int totalSize)
+        {
+            /*
+                topMargin
+             ---------------
+             l  |        | r
+             e  |        | i
+             f  |  grid  | g
+             t  |        | h
+                |        | t
+             ---------------
+               bottomMargin
+             */
+            var strBuilder = new StringBuilder(totalSize);
+            
+            strBuilder.Append(topMargin);
+
+            foreach (var gridLine in gridLines)
             {
-                GridLines = gridString.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
-
-                var gridWidth = GridLines[0].Length;
-                var gridHeight = GridLines.Length;
-
-                int horizontalMarginWidth = GetMarginSize(windowWidth, gridWidth);
-                int verticalMarginHeight = GetMarginSize(windowHeight, gridHeight);
-
-                string emptyLine = new string(' ', windowWidth) + Environment.NewLine;
-
-                VerticalMargin = string.Concat(Enumerable.Repeat(emptyLine, verticalMarginHeight));
-
-                HorizontalMargin = new string(' ', horizontalMarginWidth);
+                strBuilder.AppendLine(leftMargin + gridLine + rightMargin);
             }
 
-            private static int GetMarginSize(int windowSize, int gridWidth)
-            {
-                int marginSize = (windowSize - gridWidth) / 2 - 1;
-                return marginSize < 0 ? 0 : marginSize;
-            }
+            strBuilder.Append(bottomMargin);
+
+            return strBuilder.ToString();
         }
     }
 }
