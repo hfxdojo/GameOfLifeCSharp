@@ -34,9 +34,9 @@ namespace GameOfLife
             return (gridLines, gridWidth, gridHeight);
         }
 
-        private static int GetMarginSize(int windowSize, int gridWidth)
+        private static int GetMarginSize(int windowSize, int gridSize)
         {
-            int marginSize = (windowSize - gridWidth) / 2;
+            int marginSize = (windowSize - gridSize) / 2;
             return marginSize < 0 ? 0 : marginSize;
         }
 
