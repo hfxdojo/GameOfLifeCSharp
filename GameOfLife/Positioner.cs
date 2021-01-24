@@ -10,12 +10,11 @@ namespace GameOfLife
         {
             var (gridLines, gridWidth, gridHeight) = Decompose(gridString);
 
-            string emptyLine = new string(' ', windowWidth) + Environment.NewLine;
             int verticalMarginHeight = GetMarginSize(windowHeight, gridHeight);
-            var verticalMargin = string.Concat(Enumerable.Repeat(emptyLine, verticalMarginHeight));
+            var verticalMargin = CreateVerticalMargin(windowWidth, verticalMarginHeight);
 
             int horizontalMarginWidth = GetMarginSize(windowWidth, gridWidth);
-            var horizontalMargin = new string(' ', horizontalMarginWidth);
+            var horizontalMargin = CreateHorizontalMargin(horizontalMarginWidth);
 
             return Compose(gridLines,
                            verticalMargin,
@@ -23,6 +22,11 @@ namespace GameOfLife
                            horizontalMargin,
                            verticalMargin,
                            totalSize: windowWidth * windowHeight);
+        }
+
+        private static string CreateHorizontalMargin(int width)
+        {
+            return new string(' ', width);
         }
 
         private static (string[] lines, int width, int height) Decompose(string gridString)
@@ -39,6 +43,12 @@ namespace GameOfLife
         {
             int marginSize = (windowSize - gridWidth) / 2 - 1;
             return marginSize < 0 ? 0 : marginSize;
+        }
+
+        private static string CreateVerticalMargin(int height, int width)
+        {
+            string emptyLine = new string(' ', width) + Environment.NewLine;
+            return string.Concat(Enumerable.Repeat(emptyLine, height));
         }
 
         private static string Compose(string[] gridLines,
