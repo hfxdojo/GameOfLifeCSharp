@@ -10,13 +10,11 @@ namespace GameOfLife
         {
             var (gridLines, gridWidth, gridHeight) = Decompose(gridString);
 
-            int horizontalMarginWidth = GetMarginSize(windowWidth, gridWidth);
-            int verticalMarginHeight = GetMarginSize(windowHeight, gridHeight);
-
             string emptyLine = new string(' ', windowWidth) + Environment.NewLine;
-
+            int verticalMarginHeight = GetMarginSize(windowHeight, gridHeight);
             var verticalMargin = string.Concat(Enumerable.Repeat(emptyLine, verticalMarginHeight));
 
+            int horizontalMarginWidth = GetMarginSize(windowWidth, gridWidth);
             var horizontalMargin = new string(' ', horizontalMarginWidth);
 
             return Compose(gridLines,
