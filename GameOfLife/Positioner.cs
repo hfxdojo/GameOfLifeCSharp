@@ -61,9 +61,9 @@ namespace GameOfLife
             /*
                    topMargin
              ----------------------
-             left  |  grid  | right
-             left  |  grid  | right
-             left  |  grid  | right
+             left  |  grid  | right + NewLine
+             left  |  grid  | right + NewLine
+             left  |  grid  | right + NewLine
              ----------------------
                   bottomMargin
              */

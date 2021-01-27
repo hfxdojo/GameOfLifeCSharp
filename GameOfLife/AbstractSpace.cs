@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace GameOfLife
@@ -50,23 +51,39 @@ namespace GameOfLife
         public virtual string ToString(bool border)
         {
             int objectLength = new T().ToString().Length;
-            var horizontalBorder = '+' + new string('-', Cols * objectLength) + '+';
-            const char verticalBorder = '|';
 
+            var horizontalBorder = border ? '+' + new string('-', Cols * objectLength) + '+' + Environment.NewLine : string.Empty;
+            var verticalBorder = border ? "|" : string.Empty;
+
+            return this.Compose(horizontalBorder, verticalBorder);
+        }
+
+        private string Compose(string horizontalBorder, string verticalBorder)
+        {
+            /*
+                   topBorder        + NewLine
+             ----------------------
+             left  |  grid  | right + NewLine
+             left  |  grid  | right + NewLine
+             left  |  grid  | right + NewLine
+             ----------------------
+                  bottomBorder      + NewLine
+             */
             var strBuilder = new StringBuilder();
 
-            if (border) strBuilder.AppendLine(horizontalBorder);
+            strBuilder.AppendLine(horizontalBorder);
 
             for (var row = 0; row < Rows; row++)
             {
-                if (border) strBuilder.Append(verticalBorder);
-                for (var col = 0; col < Cols; col++) strBuilder.Append(LifeObjects[row, col]);
-                if (border) strBuilder.Append(verticalBorder);
+                strBuilder.Append(verticalBorder);
 
-                strBuilder.AppendLine();
+                for (var col = 0; col < Cols; col++) 
+                    strBuilder.Append(LifeObjects[row, col]);
+
+                strBuilder.AppendLine(verticalBorder);
             }
 
-            if (border) strBuilder.AppendLine(horizontalBorder);
+            strBuilder.AppendLine(horizontalBorder);
 
             return strBuilder.ToString();
         }
